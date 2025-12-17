@@ -1,0 +1,54 @@
+{
+  "common": {
+    "and": "und",
+    "lang": {
+      "de": "Deutsch",
+      "en": "Englisch"
+    },
+    "modal": {
+      "close": "Schließen",
+      "go_back": "Gehe zurück"
+    },
+    "sr": {
+      "dismiss": "Schließen",
+      "open_main_menu": "Hauptmenü öffnen",
+      "open_user_menu": "Benutzermenü öffnen"
+    },
+    "theme": {
+      "dark": "Dunkel",
+      "light": "Hell",
+      "system": "System"
+    }
+  },
+  "footer": {
+    "home": "Startseite",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "resources": "Ressourcen",
+    "source": "Quellcode",
+    "title": "Footer"
+  },
+  "home": {},
+  "imprint": {
+    "contact": "Kontakt",
+    "declaration": "Angaben gemäß § 5 TMG",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "title": "Impressum"
+  },
+  "privacy": {
+    "cookies": {
+      "body": "Diese Website verwendet kein analytisches Tracking jeglicher Art. Diese Website verwendet Cookies. Das sind kleine Textdateien, die der Webbrowser auf dem Endgerät speichert. Cookies helfen dabei, das Angebot nutzerfreundlicher, effektiver und sicherer zu machen. Einige Cookies sind “Session-Cookies.” Solche Cookies werden nach Ende der Browser-Sitzung von selbst gelöscht. Hingegen bleiben andere Cookies auf Ihrem Endgerät bestehen, bis diese händisch selbst gelöscht werden. Solche Cookies helfen bei Rückkehr auf die Website gemachte Einstellungen wiederzuverwenden. Mit einem modernen Webbrowser kann das Setzen von Cookies überwacht, einschränkt oder unterbunden werden. Viele Webbrowser lassen sich so konfigurieren, dass Cookies mit dem Schließen des Programms von selbst gelöscht werden. Die Deaktivierung von Cookies kann eine eingeschränkte Funktionalität der Website zur Folge haben.",
+      "title": "Analytics/Cookies/Externe-Ressourcen u.ä.?"
+    },
+    "data": {
+      "body": "Diese Website erfasst keine Daten von dir. Der im Impressum angegebene Betreiber erfährt nur von dir, wenn du ihm eine E-Mail schreibst. Dadurch erfährt der Betreiber deine E-Mail-Adresse und deinen Namen. Diese Daten werden nur für die Beantwortung deiner Anfrage verwendet und nicht an Dritte weitergegeben.",
+      "title": "Welche Daten werden von dieser Website erfasst?"
+    },
+    "rights": {
+      "body": "Nach DSGVO und BDSG kannst du jederzeit Auskunft, Aktualisierung, Sperrung oder Löschung aller deiner Daten verlangen. Dein Ansprechpartner hierfür ist der oben genannte Betreiber dieser Webseite. Außerdem bin ich verpflichtet, dich an dein Recht zu erinnern, dieser Zustimmung jederzeit zu widersprechen und dich ggf. bei einer Aufsichtsbehörde über mich zu beschweren.",
+      "title": "Was sind meine Rechte?"
+    },
+    "title": "Datenschutzerklärung"
+  }
+}
