@@ -2,7 +2,7 @@
   <div class="mx-4 flex flex-col gap-4">
     <Query @query="on_query" class="mb-6" />
   </div>
-  <div class="flex flex-col">
+  <div class="font-geist flex flex-col">
     <template v-for="track in result?.hits">
       <Track
         :track="track"
@@ -10,7 +10,6 @@
       />
     </template>
   </div>
-  <div>{{ result }}</div>
 </template>
 
 <script lang="ts">
