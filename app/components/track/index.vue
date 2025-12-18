@@ -38,24 +38,28 @@
       </div>
       <div class="flex flex-col gap-2">
         <TrackFieldInfo v-if="track.genre" fkey="Genre" :fval="track.genre">
-          <MusicalNoteIcon class="text-second-700 size-6" />
+          <MusicalNoteIcon
+            class="text-second-700 dark:text-second-300 size-6"
+          />
         </TrackFieldInfo>
         <TrackFieldInfo
           v-if="track.language"
           fkey="Language"
           :fval="track.language"
         >
-          <GlobeAltIcon class="text-second-700 size-6" />
+          <GlobeAltIcon class="text-second-700 dark:text-second-300 size-6" />
         </TrackFieldInfo>
         <TrackFieldInfo
           v-if="track.edition"
           fkey="Edition"
           :fval="track.edition"
         >
-          <RectangleGroupIcon class="text-second-700 size-6" />
+          <RectangleGroupIcon
+            class="text-second-700 dark:text-second-300 size-6"
+          />
         </TrackFieldInfo>
         <TrackFieldInfo v-if="track.tags" fkey="Tags" :fval="track.tags">
-          <TagIcon class="text-second-700 size-6" />
+          <TagIcon class="text-second-700 dark:text-second-300 size-6" />
         </TrackFieldInfo>
       </div>
       <div class="flex justify-center gap-2">
