@@ -9,6 +9,8 @@
       "close": "Schließen",
       "go_back": "Gehe zurück"
     },
+    "query": "Query",
+    "search": "Suchen",
     "sr": {
       "dismiss": "Schließen",
       "open_main_menu": "Hauptmenü öffnen",
@@ -28,7 +30,17 @@
     "source": "Quellcode",
     "title": "Footer"
   },
-  "home": {},
+  "home": {
+    "track": {
+      "edition": "Edition",
+      "genre": "Genre",
+      "golden": "Goldene Noten",
+      "language": "Sprache",
+      "play": "Audio abspielen",
+      "tags": "Tags",
+      "watch": "Video ansehen"
+    }
+  },
   "imprint": {
     "contact": "Kontakt",
     "declaration": "Angaben gemäß § 5 TMG",

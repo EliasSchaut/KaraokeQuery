@@ -9,6 +9,8 @@
       "close": "Close",
       "go_back": "Go back"
     },
+    "query": "Query",
+    "search": "Search",
     "sr": {
       "dismiss": "Dismiss",
       "open_main_menu": "Open main menu",
@@ -28,7 +30,17 @@
     "source": "Source Code",
     "title": "Footer"
   },
-  "home": {},
+  "home": {
+    "track": {
+      "edition": "Edition",
+      "genre": "Genre",
+      "golden": "Golden Notes",
+      "language": "Language",
+      "play": "Play Audio",
+      "tags": "Tags",
+      "watch": "Watch Video"
+    }
+  },
   "imprint": {
     "contact": "Contact",
     "declaration": "Information according to § 5 TMG",

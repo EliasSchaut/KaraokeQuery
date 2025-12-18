@@ -31,34 +31,42 @@
       <div class="flex justify-end gap-2">
         <BadgeGold v-if="track.golden_notes" class="flex items-center gap-2">
           <SparklesIcon class="h-4 w-4" />
-          <span>Golden Notes</span>
+          <span>{{ $t('home.track.golden') }}</span>
         </BadgeGold>
         <BadgePrime v-if="track.duet">Duett</BadgePrime>
         <BadgePrime>{{ track.year }}</BadgePrime>
       </div>
       <div class="flex flex-col gap-2">
-        <TrackFieldInfo v-if="track.genre" fkey="Genre" :fval="track.genre">
+        <TrackFieldInfo
+          v-if="track.genre"
+          :fkey="$t('home.track.genre')"
+          :fval="track.genre"
+        >
           <MusicalNoteIcon
             class="text-second-700 dark:text-second-300 size-6"
           />
         </TrackFieldInfo>
         <TrackFieldInfo
           v-if="track.language"
-          fkey="Language"
+          :fkey="$t('home.track.language')"
           :fval="track.language"
         >
           <GlobeAltIcon class="text-second-700 dark:text-second-300 size-6" />
         </TrackFieldInfo>
         <TrackFieldInfo
           v-if="track.edition"
-          fkey="Edition"
+          :fkey="$t('home.track.edition')"
           :fval="track.edition"
         >
           <RectangleGroupIcon
             class="text-second-700 dark:text-second-300 size-6"
           />
         </TrackFieldInfo>
-        <TrackFieldInfo v-if="track.tags" fkey="Tags" :fval="track.tags">
+        <TrackFieldInfo
+          v-if="track.tags"
+          :fkey="$t('home.track.tags')"
+          :fval="track.tags"
+        >
           <TagIcon class="text-second-700 dark:text-second-300 size-6" />
         </TrackFieldInfo>
       </div>
@@ -69,7 +77,7 @@
           class="flex items-center justify-center gap-2"
         >
           <PlayIcon class="size-6" />
-          <span>Play Audio</span>
+          <span>{{ $t('home.track.play') }}</span>
         </ButtonPrime>
         <ButtonPrime
           v-if="track.video_url"
@@ -77,7 +85,7 @@
           class="flex items-center justify-center gap-2"
         >
           <VideoCameraIcon class="size-6" />
-          <span>Watch Video</span>
+          <span>{{ $t('home.track.watch') }}</span>
         </ButtonPrime>
       </div>
     </div>
