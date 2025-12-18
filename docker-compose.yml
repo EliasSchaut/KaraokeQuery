@@ -5,6 +5,3 @@ services:
       - '3000:3000'
     environment:
       PORT: 3000
-      MEILI_HOST: "http://127.0.0.1:7700"
-      MEILI_API_KEY: "change_me"
-      DEFAULT_LANGUAGE: "en-US"
