@@ -1,3 +1,5 @@
+import 'dotenv';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -10,7 +12,14 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
+    'nuxt-meilisearch',
   ],
+
+  meilisearch: {
+    hostUrl: process.env.MEILI_HOST,
+    searchApiKey: process.env.MEILI_API_KEY,
+    serverSideUsage: true,
+  },
 
   fonts: {
     defaults: {
@@ -77,5 +86,4 @@ export default defineNuxtConfig({
       maxAge: 60 * 60 * 24 * 30,
     },
   },
-
-})
+});
