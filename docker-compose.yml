@@ -3,5 +3,11 @@ services:
     build: .
     ports:
       - '3000:3000'
-    environment:
-      PORT: 3000
+    env_file:
+      - .env
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    ports:
+      - '7700:7700'
+    env_file:
+      - .env

@@ -2,8 +2,8 @@ import 'dotenv';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
+  compatibilityDate: '2026-03-07',
+  devtools: { enabled: Boolean(process.env.NODE_ENV) },
   modules: [
     '@nuxtjs/i18n',
     '@nuxt/fonts',
@@ -16,8 +16,8 @@ export default defineNuxtConfig({
   ],
 
   meilisearch: {
-    hostUrl: process.env.MEILI_HOST,
-    searchApiKey: process.env.MEILI_API_KEY,
+    hostUrl: process.env.MEILI_HTTP_ADDR,
+    searchApiKey: process.env.MEILI_MASTER_KEY,
     serverSideUsage: true,
   },
 
