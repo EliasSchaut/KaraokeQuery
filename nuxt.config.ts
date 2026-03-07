@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   ],
 
   meilisearch: {
-    hostUrl: process.env.MEILI_HTTP_ADDR,
+    hostUrl: process.env.MEILI_HOST,
     searchApiKey: process.env.MEILI_MASTER_KEY,
     serverSideUsage: true,
   },
