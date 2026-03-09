@@ -38,6 +38,13 @@ async function importSongs() {
       'edition',
     ]);
 
+    await index.updateFaceting({
+      maxValuesPerFacet: 10,
+      sortFacetValuesBy: {
+        genre: 'count',
+      },
+    });
+
     console.log('Configuring sortable attributes...');
     await index.updateSortableAttributes(['year', 'title', 'artist']);
 
