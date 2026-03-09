@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
           [player]: {
             Name: player,
             ChannelIndex: 0,
-            Color: '#F7E32C',
+            Color: '#8b5cf6',
           },
         },
         PlayerProfileToVoiceNameMap: {
