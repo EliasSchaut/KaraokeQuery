@@ -41,7 +41,8 @@ cp .env.example .env
 **Only needed if you want to queue songs to Melody Mania or Ultrastar Play.**
 
 1. Stop Melody Mania/Ultrastar Play if running
-2. Open `Settings.json` and add to `HttpApiPermissions`:
+2. Open `Settings.json` of Melody Mania/Ultrastar Play (e.g. location in Windows for Melody Mania: `C:\Users\<user>\AppData\LocalLow\melodymania\Melody Mania`)
+3. Add the followint to `HttpApiPermissions`:
    ```json
    {
      "HttpApiPermissions": {
@@ -51,10 +52,10 @@ cp .env.example .env
    ```
    Replace `your-client-id` with any string you choose (e.g., `karaoke-query`)
 
-3. Set `ULTRASTAR_CLIENT_ID` in `.env` to match the client ID above
-4. Start the game and navigate to:
+4. Set `ULTRASTAR_CLIENT_ID` in `.env` to match the client ID above
+5. Start the game and navigate to:
    `Settings → Develop → Companion Client Connections → HTTP endpoint example`
-5. Copy the base URL (e.g., `http://localhost:34567`) to `ULTRASTAR_API_BASE` in `.env`
+6. Copy the base URL (e.g., `http://localhost:34567`) to `ULTRASTAR_API_BASE` in `.env`
    - **Do not** include the `/api/rest/...` path
 
 ### 4. Configure Environment Variables
