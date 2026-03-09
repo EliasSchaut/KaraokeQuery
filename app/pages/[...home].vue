@@ -3,7 +3,12 @@
     <div class="mx-4 flex flex-col gap-4">
       <Query @query="on_query" />
       <div class="flex flex-row flex-wrap gap-3">
-        <BadgeButton v-for="genre in genres">{{ genre }}</BadgeButton>
+        <BadgeButton
+          v-for="genre in genres"
+          @click="on_gerne_filter(genre)"
+          :active="selectedGenre === genre"
+          >{{ genre }}</BadgeButton
+        >
       </div>
     </div>
 
@@ -48,15 +53,41 @@ export default defineComponent({
       search,
       result,
       genres,
+      currentQuery: ref(''),
+      selectedGenre: ref(''),
       searching: ref(false),
     };
   },
   methods: {
     async on_query(query: string) {
+      this.currentQuery = query;
       this.searching = true;
-      if (this.result?.hits) this.result.hits = [];
-      await this.search(query);
+      this.reset_search_results();
+      await this.search(query, {
+        facets: ['genre'],
+      });
+      const genreDistribution = this.result?.facetDistribution?.genre;
+      if (genreDistribution) {
+        this.genres = Object.keys(genreDistribution);
+      }
       this.searching = false;
+    },
+    async on_gerne_filter(genre: string) {
+      if (genre === this.selectedGenre) return this.reset_genre();
+      this.selectedGenre = genre;
+      this.searching = true;
+      this.reset_search_results();
+      await this.search(this.currentQuery, {
+        filter: `genre = '${genre}'`,
+      });
+      this.searching = false;
+    },
+    reset_search_results() {
+      if (this.result?.hits) this.result.hits = [];
+    },
+    reset_genre() {
+      this.selectedGenre = '';
+      this.on_query(this.currentQuery);
     },
   },
 });

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-y-3">
     <div
-      class="flex w-full items-center justify-between gap-3"
+      class="flex w-full items-center justify-between gap-3 md:gap-4 xl:gap-5"
       @click="is_open = !is_open"
     >
       <div class="shrink-0">
@@ -10,6 +10,7 @@
           height="60"
           :src="track.cover_url"
           :alt="`${track.title} cover`"
+          class="size-16 object-cover md:size-20 xl:size-24"
         />
       </div>
       <div class="flex-1">
