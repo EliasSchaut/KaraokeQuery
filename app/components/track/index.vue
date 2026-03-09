@@ -111,7 +111,7 @@ import {
 
 defineProps({
   track: {
-    type: TrackType,
+    type: Object as PropType<TrackType>,
     required: true,
   },
 });

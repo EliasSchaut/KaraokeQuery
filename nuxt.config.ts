@@ -15,6 +15,11 @@ export default defineNuxtConfig({
     'nuxt-meilisearch',
   ],
 
+  runtimeConfig: {
+    ULTRASTAR_API_BASE: process.env.ULTRASTAR_API_BASE,
+    ULTRASTAR_CLIENT_ID: process.env.ULTRASTAR_CLIENT_ID,
+  },
+
   meilisearch: {
     hostUrl: process.env.MEILI_HOST,
     searchApiKey: process.env.MEILI_MASTER_KEY,
