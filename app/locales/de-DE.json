@@ -31,6 +31,10 @@
     "title": "Footer"
   },
   "home": {
+    "list": {
+      "next": "Weiter",
+      "previous": "Zurück"
+    },
     "track": {
       "edition": "Edition",
       "genre": "Genre",
