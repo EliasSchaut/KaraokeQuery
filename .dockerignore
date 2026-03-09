@@ -1,4 +1,19 @@
+# builds & packages
 node_modules
 .nuxt
 .idea
+.output
+
+# VSC
+.git
+.gitignore
+
+# Doku
+*.md
 .env.example
+LICENSE
+
+# Configs
+.prettierrc
+.infisical.json
+

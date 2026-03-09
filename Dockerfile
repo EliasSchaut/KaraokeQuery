@@ -1,14 +1,23 @@
-FROM node:alpine
+FROM node:24-slim AS base
 
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-WORKDIR /home/node/app
-COPY package*.json ./
-RUN npm install
-COPY --chown=node:node . .
-RUN npm run build
+RUN corepack enable
+COPY . /app
+WORKDIR /app
+
+FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+
+FROM base AS build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm run build
+
+FROM base
+COPY --from=prod-deps /app/node_modules /app/node_modules
+COPY --from=build /app/.output /app/.output
 EXPOSE $PORT
-
-CMD ["npm", "start"]
+CMD [ "pnpm", "start" ]
