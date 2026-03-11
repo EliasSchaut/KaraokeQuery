@@ -1,5 +1,7 @@
 # KaraokeQuery
 
+> Please note that this project is still work in progress and may not be fully functional.
+
 A simple web frontend for Meilisearch that displays available karaoke songs downloaded
 with [usdb_syncer](https://github.com/bohning/usdb_syncer).
 

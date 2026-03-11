@@ -16,8 +16,26 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
+    public: {
+      use_queue: Boolean(process.env.KARAOKE_QUERY_USE_QUEUE) || false,
+      default_username: process.env.DEFAULT_USERNAME || 'Unknown',
+    },
     ULTRASTAR_API_BASE: process.env.ULTRASTAR_API_BASE,
     ULTRASTAR_CLIENT_ID: process.env.ULTRASTAR_CLIENT_ID,
+  },
+
+  nitro: {
+    storage: {
+      redis: {
+        driver: 'redis',
+        port: process.env.REDIS_PORT || 6379,
+        host: process.env.REDIS_HOST || '127.0.0.1',
+        username: process.env.REDIS_USERNAME || 'default',
+        password: process.env.REDIS_PASSWORD || '',
+        db: process.env.REDIS_DB || 0,
+        tls: {},
+      },
+    },
   },
 
   meilisearch: {
