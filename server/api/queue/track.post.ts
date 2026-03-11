@@ -1,5 +1,11 @@
 export default defineEventHandler(async (event) => {
-  const { ULTRASTAR_API_BASE, ULTRASTAR_CLIENT_ID } = useRuntimeConfig();
+  const {
+    ULTRASTAR_API_BASE,
+    ULTRASTAR_CLIENT_ID,
+    ULTRASTAR_RECORDING_NAME,
+    ULTRASTAR_RECORDING_CHANNEL,
+    ULTRASTAR_PLAYER_COLOR,
+  } = useRuntimeConfig();
 
   const { artist, title, player } = await readBody(event);
 
@@ -33,16 +39,16 @@ export default defineEventHandler(async (event) => {
         Hash: hash,
       },
       SingScenePlayerDataDto: {
-        PlayerProfileNames: [player],
+        PlayerProfileNames: ['Player01', 'Player02', 'Player03', 'Player04'],
         PlayerProfileToMicProfileMap: {
-          [player]: {
-            Name: player,
-            ChannelIndex: 0,
-            Color: '#8b5cf6',
+          Player01: {
+            Name: ULTRASTAR_RECORDING_NAME,
+            ChannelIndex: Number(ULTRASTAR_RECORDING_CHANNEL),
+            Color: ULTRASTAR_PLAYER_COLOR,
           },
         },
         PlayerProfileToVoiceNameMap: {
-          player: '',
+          Player01: '',
         },
       },
       GameRoundSettings: {},
