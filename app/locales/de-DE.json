@@ -9,7 +9,7 @@
       "close": "Schließen",
       "go_back": "Gehe zurück"
     },
-    "query": "Query",
+    "query": "Querytr",
     "search": "Suchen",
     "sr": {
       "dismiss": "Schließen",
@@ -41,6 +41,7 @@
       "golden": "Goldene Noten",
       "language": "Sprache",
       "play": "Audio abspielen",
+      "queue": "Zur Queue hinzufügen",
       "tags": "Tags",
       "watch": "Video ansehen"
     }

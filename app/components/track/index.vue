@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-y-3">
     <div
       class="flex w-full items-center justify-between gap-3 md:gap-4 xl:gap-5"
-      @click="is_open = !is_open"
+      @click="isOpen = !isOpen"
     >
       <div class="shrink-0">
         <img
@@ -24,11 +24,11 @@
       <div class="shrink-0">
         <ChevronLeftIcon
           class="size-6 text-gray-400 transition-transform duration-100"
-          :class="{ '-rotate-90': is_open }"
+          :class="{ '-rotate-90': isOpen }"
         />
       </div>
     </div>
-    <div v-if="is_open" class="flex flex-col gap-3">
+    <div v-if="isOpen" class="flex flex-col gap-3">
       <div class="flex justify-end gap-2">
         <BadgeGold v-if="track.golden_notes" class="flex items-center gap-2">
           <SparklesIcon class="h-4 w-4" />
@@ -71,10 +71,11 @@
           <TagIcon class="text-second-700 dark:text-second-300 size-6" />
         </TrackFieldInfo>
       </div>
-      <div class="flex justify-center gap-2">
+      <div class="flex flex-wrap justify-center gap-2">
         <ButtonPrime
           v-if="track.audio_url"
           :href="track.audio_url"
+          target="_blank"
           class="flex items-center justify-center gap-2"
         >
           <PlayIcon class="size-6" />
@@ -83,23 +84,34 @@
         <ButtonPrime
           v-if="track.video_url"
           :href="track.video_url"
+          target="_blank"
           class="flex items-center justify-center gap-2"
         >
           <VideoCameraIcon class="size-6" />
           <span>{{ $t('home.track.watch') }}</span>
+        </ButtonPrime>
+        <ButtonPrime
+          v-if="use_queue"
+          href="#"
+          @click="onQueueSongRequest"
+          class="flex items-center justify-center gap-2"
+        >
+          <PlusCircleIcon class="size-6" />
+          <span>{{ $t('home.track.queue') }}</span>
         </ButtonPrime>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { TrackType } from '#shared/types/track';
 import {
   ChevronLeftIcon,
   PlayIcon,
   VideoCameraIcon,
   SparklesIcon,
+  PlusCircleIcon,
 } from '@heroicons/vue/24/solid';
 
 import {
@@ -109,12 +121,36 @@ import {
   TagIcon,
 } from '@heroicons/vue/24/outline';
 
-defineProps({
-  track: {
-    type: Object as PropType<TrackType>,
-    required: true,
+export default defineComponent({
+  emits: ['queueSongRequest'],
+  components: {
+    ChevronLeftIcon,
+    PlayIcon,
+    VideoCameraIcon,
+    SparklesIcon,
+    MusicalNoteIcon,
+    GlobeAltIcon,
+    RectangleGroupIcon,
+    TagIcon,
+    PlusCircleIcon,
+  },
+  setup() {
+    const { use_queue } = useRuntimeConfig().public;
+    return {
+      use_queue,
+      isOpen: ref(false),
+    };
+  },
+  props: {
+    track: {
+      type: Object as PropType<TrackType>,
+      required: true,
+    },
+  },
+  methods: {
+    onQueueSongRequest() {
+      this.$emit('queueSongRequest', this.track);
+    },
   },
 });
-
-const is_open = ref(false);
 </script>

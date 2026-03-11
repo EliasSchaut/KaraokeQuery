@@ -41,6 +41,7 @@
       "golden": "Golden Notes",
       "language": "Language",
       "play": "Play Audio",
+      "queue": "Add to Queue",
       "tags": "Tags",
       "watch": "Watch Video"
     }
