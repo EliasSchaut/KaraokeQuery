@@ -35,15 +35,59 @@
       </div>
     </div>
   </div>
+  <Modal ref="modal">
+    <div>
+      <div
+        class="bg-prime-100 dark:bg-prime-500/10 mx-auto flex size-12 items-center justify-center rounded-full"
+      >
+        <UserCircleIcon
+          class="text-prime-600 dark:text-prime-400 size-6"
+          aria-hidden="true"
+        />
+      </div>
+      <div class="mt-3 text-center sm:mt-5">
+        <DialogTitle
+          as="h3"
+          class="text-second-900 text-base font-semibold dark:text-white"
+          >Set Your Name</DialogTitle
+        >
+        <form class="mt-2" @submit.prevent="on_username_submit">
+          <p class="text-second-500 dark:text-second-400 text-sm">
+            Please enter your name to be able to queue songs.
+          </p>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            class="my-3 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+            minlength="3"
+            placeholder="Your beautiful name"
+            required
+          />
+          <button
+            type="submit"
+            class="bg-prime-600 hover:bg-prime-500 focus-visible:outline-prime-600 dark:bg-prime-500 dark:hover:bg-prime-400 dark:focus-visible:outline-prime-500 inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 dark:shadow-none"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </Modal>
 </template>
 
 <script lang="ts">
+import { userStore } from '~/store/user';
 import Spinner from '~/components/spinner.vue';
 import Pagination from '~/components/pagination.vue';
+import { UserCircleIcon } from '@heroicons/vue/24/outline';
+import { DialogTitle } from '@headlessui/vue';
 
 export default defineComponent({
-  components: { Pagination, Spinner },
+  components: { DialogTitle, UserCircleIcon, Pagination, Spinner },
   setup() {
+    const user = userStore();
+    const { use_queue, default_username } = useRuntimeConfig().public;
     const { search, result } = useMeiliSearch('karaoke');
 
     const genres = ref<string[]>([]);
@@ -58,6 +102,9 @@ export default defineComponent({
     });
 
     return {
+      use_queue,
+      default_username,
+      user,
       search,
       result,
       genres,
@@ -66,7 +113,22 @@ export default defineComponent({
       searching: ref(false),
     };
   },
+  mounted() {
+    if (this.use_queue && this.user.username === this.default_username) {
+      this.show_new_user_modal();
+    }
+  },
   methods: {
+    async show_new_user_modal() {
+      this.$refs.modal.open();
+    },
+    async on_username_submit(e: Event) {
+      const form = e.target as HTMLFormElement;
+      const form_data = new FormData(form);
+      const username = String(form_data.get('username'));
+      this.user.setName(username);
+      this.$refs.modal.close();
+    },
     async on_query(query: string) {
       this.currentQuery = query;
       this.searching = true;
