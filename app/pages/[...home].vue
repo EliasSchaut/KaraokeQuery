@@ -82,9 +82,10 @@ import Spinner from '~/components/spinner.vue';
 import Pagination from '~/components/pagination.vue';
 import { UserCircleIcon } from '@heroicons/vue/24/outline';
 import { DialogTitle } from '@headlessui/vue';
+import Modal from '~/components/modal.vue';
 
 export default defineComponent({
-  components: { DialogTitle, UserCircleIcon, Pagination, Spinner },
+  components: { DialogTitle, UserCircleIcon, Pagination, Spinner, Modal },
   setup() {
     const user = userStore();
     const { use_queue, default_username } = useRuntimeConfig().public;
@@ -118,16 +119,21 @@ export default defineComponent({
       this.show_new_user_modal();
     }
   },
+  computed: {
+    modal(): InstanceType<typeof Modal> {
+      return this.$refs.modal as InstanceType<typeof Modal>;
+    },
+  },
   methods: {
     async show_new_user_modal() {
-      this.$refs.modal.open();
+      this.modal.open();
     },
     async on_username_submit(e: Event) {
       const form = e.target as HTMLFormElement;
       const form_data = new FormData(form);
       const username = String(form_data.get('username'));
       this.user.setName(username);
-      this.$refs.modal.close();
+      this.modal.close();
     },
     async on_query(query: string) {
       this.currentQuery = query;
@@ -141,7 +147,6 @@ export default defineComponent({
         this.genres = Object.keys(genreDistribution);
       }
       this.searching = false;
-      console.log(this.result);
     },
     async on_offset_change(offset: number) {
       this.searching = true;
