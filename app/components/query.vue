@@ -5,6 +5,7 @@
         type="text"
         name="query"
         id="query"
+        ref="query"
         class="text-second-900 outline-second-300 placeholder:text-second-400 focus:outline-prime-600 dark:outline-second-700 dark:placeholder:text-second-500 dark:focus:outline-prime-500 col-start-1 row-start-1 block w-full rounded-l-full bg-white py-1.5 pr-3 pl-10 text-base outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 sm:pl-9 sm:text-sm/6 dark:bg-white/5 dark:text-white"
         :placeholder="`${$t('common.query')} ...`"
       />
@@ -12,6 +13,13 @@
         class="text-second-400 dark:text-second-500 pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center sm:size-4"
         aria-hidden="true"
       />
+      <button
+        type="button"
+        class="z-10 col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end sm:size-4"
+        @click="clear_query"
+      >
+        <XCircleIcon class="text-second-400 dark:text-second-500" />
+      </button>
     </div>
     <button
       type="submit"
@@ -23,10 +31,10 @@
 </template>
 
 <script lang="ts">
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid';
+import { MagnifyingGlassIcon, XCircleIcon } from '@heroicons/vue/24/solid';
 
 export default defineComponent({
-  components: { MagnifyingGlassIcon },
+  components: { MagnifyingGlassIcon, XCircleIcon },
   emits: ['query'],
   methods: {
     on_form_submit(e: Event) {
@@ -34,6 +42,10 @@ export default defineComponent({
       const form_data = new FormData(form);
       const query = form_data.get('query');
       this.$emit('query', query);
+    },
+    clear_query() {
+      (this.$refs.query as HTMLInputElement).value = '';
+      this.$emit('query', '');
     },
   },
 });
