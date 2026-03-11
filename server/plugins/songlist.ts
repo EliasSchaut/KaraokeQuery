@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
 
-export default defineNitroPlugin(async (nitroApp) => {
+export default defineNitroPlugin(async () => {
   const config = useRuntimeConfig();
   const songlistPath = config.SONGLIST_PATH || './songlist.json';
   const absolutePath = resolve(process.cwd(), songlistPath);
@@ -14,9 +14,9 @@ export default defineNitroPlugin(async (nitroApp) => {
   }
 
   try {
-    const { hostUrl, adminApiKey } = config.meilisearch;
+    const { MEILI_HOST, MEILI_MASTER_KEY } = config;
 
-    if (!hostUrl || !adminApiKey) {
+    if (!MEILI_HOST || !MEILI_MASTER_KEY) {
       console.error(
         '[Meilisearch Startup] Meilisearch host or API key is missing. Skipping data initialization.',
       );
@@ -37,8 +37,8 @@ export default defineNitroPlugin(async (nitroApp) => {
 
     const { MeiliSearch } = await import('meilisearch');
     const client = new MeiliSearch({
-      host: hostUrl,
-      apiKey: adminApiKey,
+      host: MEILI_HOST,
+      apiKey: MEILI_MASTER_KEY,
     });
 
     const index = client.index('karaoke');

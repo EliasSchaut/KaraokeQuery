@@ -7,6 +7,9 @@ export const userStore = defineStore('user', {
     };
   },
   actions: {
+    getName() {
+      return this.username;
+    },
     setName(name: string) {
       this.username = name;
     },

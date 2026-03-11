@@ -1,17 +1,24 @@
-import { $meilisearch } from '#build/types/nitro-imports';
-
 export default defineEventHandler(async (event) => {
   const { ULTRASTAR_API_BASE, ULTRASTAR_CLIENT_ID } = useRuntimeConfig();
 
-  const artist = getRouterParam(event, 'artist');
-  const title = getRouterParam(event, 'title');
-  const player = getRouterParam(event, 'username');
+  const { artist, title, player } = await readBody(event);
 
   if (![artist, title, player].every(Boolean)) {
     return new Response('Missing required parameters', { status: 400 });
   }
 
-  const hash = '';
+  const searchResult = await $meilisearch(event)
+    .index('ultrastar')
+    .search(`${artist} ${title}`, {
+      limit: 1,
+    });
+
+  const track = searchResult.hits[0] as any;
+  const hash = track?.Hash || '';
+
+  if (!hash) {
+    return new Response('Track not found', { status: 404 });
+  }
 
   return await $fetch(`${ULTRASTAR_API_BASE}/api/rest/songQueue/entry`, {
     method: 'POST',

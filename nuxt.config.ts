@@ -23,6 +23,8 @@ export default defineNuxtConfig({
     SONGLIST_PATH: process.env.SONGLIST_PATH || './songlist.json',
     ULTRASTAR_API_BASE: process.env.ULTRASTAR_API_BASE,
     ULTRASTAR_CLIENT_ID: process.env.ULTRASTAR_CLIENT_ID,
+    MEILI_HOST: process.env.MEILI_HOST,
+    MEILI_MASTER_KEY: process.env.MEILI_MASTER_KEY,
   },
 
   nitro: {

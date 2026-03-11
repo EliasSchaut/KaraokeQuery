@@ -1,6 +1,6 @@
 import { UltrastarTrackType } from '#shared/types/ultrastar_track';
 
-export default defineNitroPlugin(async (nitroApp) => {
+export default defineNitroPlugin(async () => {
   const config = useRuntimeConfig();
   const { ULTRASTAR_API_BASE, ULTRASTAR_CLIENT_ID } = config;
 
@@ -17,8 +17,8 @@ export default defineNitroPlugin(async (nitroApp) => {
   }
 
   try {
-    const { hostUrl, adminApiKey } = config.meilisearch;
-    if (!hostUrl || !adminApiKey) {
+    const { MEILI_HOST, MEILI_MASTER_KEY } = config;
+    if (!MEILI_HOST || !MEILI_MASTER_KEY) {
       console.error(
         '[UltraStar Startup] Meilisearch configuration is missing.',
       );
@@ -44,28 +44,32 @@ export default defineNitroPlugin(async (nitroApp) => {
       return null;
     })) as { SongList: UltrastarTrackType[] };
 
-    if (!response || !Array.isArray(response)) {
+    if (!response || !Array.isArray(response.SongList)) {
       console.warn(
         '[UltraStar Startup] No songs returned or invalid response format from UltraStar.',
       );
       return;
     }
 
-    const songs: UltrastarTrackType[] = response.SongList;
+    const songs = response.SongList.map((song) => {
+      return {
+        ...song,
+        id: Buffer.from(song.Hash).toString('hex'),
+      };
+    });
     console.log(
       `[UltraStar Startup] Received ${songs.length} songs from UltraStar. Loading into Meilisearch 'ultrastar' index...`,
     );
 
     const { MeiliSearch } = await import('meilisearch');
     const client = new MeiliSearch({
-      host: hostUrl,
-      apiKey: adminApiKey,
+      host: MEILI_HOST,
+      apiKey: MEILI_MASTER_KEY,
     });
 
     const index = client.index('ultrastar');
-
     const importResponse = index.addDocuments(songs, {
-      primaryKey: 'Hash',
+      primaryKey: 'id',
     });
     await importResponse.waitTask();
 
@@ -76,8 +80,10 @@ export default defineNitroPlugin(async (nitroApp) => {
       index.updateSortableAttributes(['Artist', 'Title', 'Hash']),
     ]);
 
+    const stats = await client.index('ultrastar').getStats();
+
     console.log(
-      '✓ [UltraStar Startup] Successfully loaded UltraStar songs into Meilisearch!',
+      `✓ [UltraStar Startup] Successfully loaded ${stats.numberOfDocuments} UltraStar songs into Meilisearch!`,
     );
   } catch (error) {
     console.error(
