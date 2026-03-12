@@ -36,6 +36,7 @@
       </div>
     </div>
   </div>
+  <Queue />
   <Modal ref="modal">
     <div>
       <div
