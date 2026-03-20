@@ -67,5 +67,8 @@
       "title": "What are my rights?"
     },
     "title": "Privacy"
+  },
+  "queue": {
+    "empty": "Queue is empty"
   }
 }

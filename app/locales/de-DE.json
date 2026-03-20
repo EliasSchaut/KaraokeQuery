@@ -67,5 +67,8 @@
       "title": "Was sind meine Rechte?"
     },
     "title": "Datenschutzerklärung"
+  },
+  "queue": {
+    "empty": "Warteschlange ist leer"
   }
 }
