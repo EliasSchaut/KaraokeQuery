@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     ULTRASTAR_PLAYER_COLOR: process.env.ULTRASTAR_COLOR_PLAYER_1,
     MEILI_HOST: process.env.MEILI_HOST,
     MEILI_MASTER_KEY: process.env.MEILI_MASTER_KEY,
+    SING_SCENE_PLAYER_DATA_DTO: process.env.SING_SCENE_PLAYER_DATA_DTO,
   },
 
   nitro: {
