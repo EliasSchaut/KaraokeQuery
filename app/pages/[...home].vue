@@ -16,7 +16,7 @@
       <template v-for="track in result?.hits">
         <Track
           :track="track as TrackType"
-          @queueSongRequest="on_queue_song_request"
+          @queueSongRequested="on_queue_song_requested"
           class="even:bg-second-200 dark:even:bg-second-800 dark:odd:bg-second-900 odd:bg-second-100 not-first:border-t-second-300 dark:not-first:border-t-second-700 p-3 not-first:border-t"
         />
       </template>
@@ -174,16 +174,7 @@ export default defineComponent({
       this.selectedGenre = '';
       this.on_query(this.currentQuery);
     },
-    async on_queue_song_request(track: TrackType) {
-      await $fetch('/api/queue/track', {
-        method: 'POST',
-        body: {
-          artist: track.artist,
-          title: track.title,
-          player: this.user.getName(),
-        },
-      });
-    },
+    async on_queue_song_requested(track: TrackType) {},
   },
 });
 </script>

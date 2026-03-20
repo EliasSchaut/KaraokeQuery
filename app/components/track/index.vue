@@ -90,15 +90,15 @@
           <VideoCameraIcon class="size-6" />
           <span>{{ $t('home.track.watch') }}</span>
         </ButtonPrime>
-        <ButtonPrime
+        <ButtonLoading
           v-if="use_queue"
-          href="#"
           @click="onQueueSongRequest"
+          :loading="loading"
           class="flex items-center justify-center gap-2"
         >
           <PlusCircleIcon class="size-6" />
           <span>{{ $t('home.track.queue') }}</span>
-        </ButtonPrime>
+        </ButtonLoading>
       </div>
     </div>
   </div>
@@ -120,9 +120,10 @@ import {
   RectangleGroupIcon,
   TagIcon,
 } from '@heroicons/vue/24/outline';
+import { userStore } from '~/store/user';
 
 export default defineComponent({
-  emits: ['queueSongRequest'],
+  emits: ['queueSongRequested'],
   components: {
     ChevronLeftIcon,
     PlayIcon,
@@ -139,6 +140,8 @@ export default defineComponent({
     return {
       use_queue,
       isOpen: ref(false),
+      loading: ref(false),
+      user: userStore(),
     };
   },
   props: {
@@ -148,8 +151,18 @@ export default defineComponent({
     },
   },
   methods: {
-    onQueueSongRequest() {
-      this.$emit('queueSongRequest', this.track);
+    async onQueueSongRequest() {
+      this.loading = true;
+      await $fetch('/api/queue/track', {
+        method: 'POST',
+        body: {
+          artist: this.track.artist,
+          title: this.track.title,
+          player: this.user.getName(),
+        },
+      });
+      this.$emit('queueSongRequested', this.track);
+      this.loading = false;
     },
   },
 });
