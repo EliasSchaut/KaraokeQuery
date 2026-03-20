@@ -55,9 +55,13 @@ cp .env.example .env
    Replace `your-client-id` with any string you choose (e.g., `karaoke-query`)
 
 4. Set `ULTRASTAR_CLIENT_ID` in `.env` to match the client ID above
-5. Start the game and navigate to:
+5. Configure `SING_SCENE_PLAYER_DATA_DTO` in `.env` with the player and microphone profiles. Use the format provided in `.env.example`. This JSON structure defines:
+   - `PlayerProfileNames`: List of players to use in the game.
+   - `PlayerProfileToMicProfileMap`: Mapping of player names to their microphone settings (name, channel, color, etc.).
+   - `PlayerProfileToVoiceIdMap`: Mapping of player names to voice IDs (e.g., "P1", "P2").
+6. Start the game and navigate to:
    `Settings → Develop → Companion Client Connections → HTTP endpoint example`
-6. Copy the base URL (e.g., `http://localhost:34567`) to `ULTRASTAR_API_BASE` in `.env`
+7. Copy the base URL (e.g., `http://localhost:34567`) to `ULTRASTAR_API_BASE` in `.env`
    - **Do not** include the `/api/rest/...` path
 
 ### 4. Configure Environment Variables
