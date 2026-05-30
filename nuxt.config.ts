@@ -34,19 +34,6 @@ export default defineNuxtConfig({
     SING_SCENE_PLAYER_DATA_DTO: process.env.SING_SCENE_PLAYER_DATA_DTO,
   },
 
-  nitro: {
-    storage: {
-      redis: {
-        driver: 'redis',
-        port: process.env.REDIS_PORT || 6379,
-        host: process.env.REDIS_HOST || '127.0.0.1',
-        username: process.env.REDIS_USERNAME || 'default',
-        password: process.env.REDIS_PASSWORD || '',
-        db: process.env.REDIS_DB || 0,
-      },
-    },
-  },
-
   meilisearch: {
     hostUrl: process.env.MEILI_HOST,
     adminApiKey: process.env.MEILI_MASTER_KEY,
