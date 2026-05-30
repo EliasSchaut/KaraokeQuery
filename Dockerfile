@@ -1,23 +1,30 @@
 FROM node:24-slim AS base
 
-ENV NODE_ENV=production
-ENV PORT=3000
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
-COPY . /app
 WORKDIR /app
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-
 FROM base AS build
+ENV NODE_ENV=production
+COPY . /app
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM base
-COPY --from=prod-deps /app/node_modules /app/node_modules
-COPY --from=build /app/.output /app/.output
-EXPOSE $PORT
-CMD [ "pnpm", "start" ]
+# Schlankes Runtime-Image: Nitros .output ist standalone (eigene node_modules),
+# daher werden weder Quellcode noch das Wurzel-node_modules benötigt.
+FROM node:24-slim AS runtime
+ENV NODE_ENV=production
+ENV PORT=3000
+
+WORKDIR /app
+COPY --from=build /app/.output ./.output
+# Entrypoint leitet den read-only Meilisearch-Such-Key fuer den Browser ab.
+COPY --from=build /app/entrypoint.mjs ./entrypoint.mjs
+
+# Als non-root laufen (der node-User existiert im Base-Image).
+USER node
+
+EXPOSE 3000
+CMD [ "node", "entrypoint.mjs" ]

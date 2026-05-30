@@ -10,10 +10,17 @@ node_modules
 
 # Doku
 *.md
-.env.example
 LICENSE
+
+# Secrets / lokale Env-Dateien (nie ins Image!)
+.env
+.env.*
+!.env.example
 
 # Configs
 .prettierrc
 .infisical.json
+
+# Windows-Artefakt
+nul
 

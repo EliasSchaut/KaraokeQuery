@@ -8,6 +8,31 @@ services:
       - .env
     environment:
       - NODE_ENV=production
+      # Diese App liest ihre Config über Nuxt-runtimeConfig. Im gebauten Image
+      # greifen zur Laufzeit nur NUXT_-praefixierte Variablen (die unpraefixierten
+      # Namen aus der .env werden beim Build eingefroren). Die Werte unten kommen
+      # per ${...}-Interpolation aus der .env im Projektverzeichnis.
+      #
+      # Meilisearch server-seitig (Plugins/Queue): interner Service-Name.
+      - NUXT_MEILI_HOST=http://meilisearch:7700
+      - NUXT_MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+      - NUXT_SERVER_MEILISEARCH_CLIENT_HOST_URL=http://meilisearch:7700
+      - NUXT_SERVER_MEILISEARCH_CLIENT_ADMIN_API_KEY=${MEILI_MASTER_KEY}
+      # Meilisearch browser-seitig: muss vom BROWSER erreichbar sein. Fuer ein
+      # entferntes Deployment hier die oeffentliche URL/Domain eintragen.
+      # Der Such-Key wird NICHT hier gesetzt, sondern zur Laufzeit serverseitig
+      # vom Plugin meili-search-key.ts erzeugt (nur 'search', nie der Master-Key).
+      - NUXT_PUBLIC_MEILISEARCH_CLIENT_HOST_URL=http://localhost:7700
+      # Ultrastar-Anbindung
+      - NUXT_ULTRASTAR_API_BASE=${ULTRASTAR_API_BASE}
+      - NUXT_ULTRASTAR_CLIENT_ID=${ULTRASTAR_CLIENT_ID}
+      - NUXT_SING_SCENE_PLAYER_DATA_DTO=${SING_SCENE_PLAYER_DATA_DTO}
+      # Feature-Flag Queue (public)
+      - NUXT_PUBLIC_USE_QUEUE=true
+    volumes:
+      # songlist.json wird zur Laufzeit gelesen (befüllt den 'karaoke'-Index)
+      # und liegt bewusst nicht im Image, da gitignored.
+      - ./songlist.json:/app/songlist.json:ro
     depends_on:
       - meilisearch
       - redis

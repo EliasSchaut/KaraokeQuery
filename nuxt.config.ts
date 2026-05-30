@@ -1,9 +1,10 @@
 import 'dotenv';
+import { deriveMeiliSearchApiKey } from './server/utils/meiliSearchKey';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2026-03-07',
-  devtools: { enabled: Boolean(process.env.NODE_ENV) },
+  devtools: { enabled: process.env.NODE_ENV === 'development' },
   modules: [
     '@nuxtjs/i18n',
     '@nuxt/fonts',
@@ -42,7 +43,6 @@ export default defineNuxtConfig({
         username: process.env.REDIS_USERNAME || 'default',
         password: process.env.REDIS_PASSWORD || '',
         db: process.env.REDIS_DB || 0,
-        tls: {},
       },
     },
   },
@@ -50,7 +50,11 @@ export default defineNuxtConfig({
   meilisearch: {
     hostUrl: process.env.MEILI_HOST,
     adminApiKey: process.env.MEILI_MASTER_KEY,
-    searchApiKey: process.env.MEILI_MASTER_KEY,
+    // Kein Master-Key im Browser! Der reine Such-Key wird deterministisch aus
+    // dem Master-Key abgeleitet. Im Dev greift dies direkt (hier ist .env
+    // geladen); im gebauten Image ist es zur Build-Zeit leer und wird vom
+    // Entrypoint zur Laufzeit per NUXT_PUBLIC_..._SEARCH_API_KEY gesetzt.
+    searchApiKey: deriveMeiliSearchApiKey(process.env.MEILI_MASTER_KEY),
     serverSideUsage: true,
   },
 
