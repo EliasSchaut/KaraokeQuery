@@ -24,6 +24,13 @@ export default defineEventHandler(async (event) => {
     return new Response('Track not found', { status: 404 });
   }
 
+  // Nuxt parst NUXT_-Env-Werte automatisch (destr), d.h. ueber die Env-Variable
+  // kommt hier bereits ein Objekt an; aus der .env (Build) ein JSON-String.
+  const singScenePlayerData =
+    typeof SING_SCENE_PLAYER_DATA_DTO === 'string'
+      ? JSON.parse(SING_SCENE_PLAYER_DATA_DTO)
+      : SING_SCENE_PLAYER_DATA_DTO;
+
   return await $fetch(`${ULTRASTAR_API_BASE}/api/rest/songQueue/entry`, {
     method: 'POST',
     headers: {
@@ -36,7 +43,7 @@ export default defineEventHandler(async (event) => {
         Title: title,
         Hash: hash,
       },
-      SingScenePlayerDataDto: JSON.parse(SING_SCENE_PLAYER_DATA_DTO),
+      SingScenePlayerDataDto: singScenePlayerData,
       GameRoundSettings: { ModifierDtos: [], AnyModifierActive: false },
       IsMedleyWithPreviousEntry: false,
     }),

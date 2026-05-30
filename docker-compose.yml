@@ -36,6 +36,7 @@ services:
       - ./songlist.json:/app/songlist.json:ro
     depends_on:
       - meilisearch
+
   meilisearch:
     container_name: meilisearch_karaoke_query
     image: getmeili/meilisearch:latest

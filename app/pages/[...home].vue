@@ -94,15 +94,19 @@ export default defineComponent({
     const { search, result } = useMeiliSearch('karaoke');
 
     const genres = ref<string[]>([]);
-    search('', {
-      facets: ['genre'],
-      limit: 0,
-    }).then(() => {
-      const genreDistribution = result.value?.facetDistribution?.genre;
-      if (genreDistribution) {
-        genres.value = Object.keys(genreDistribution);
-      }
-    });
+    // Nur im Browser suchen: Meilisearch wird vom Client direkt angesprochen
+    // (public Host), den der Server im SSR nicht erreicht.
+    if (import.meta.client) {
+      search('', {
+        facets: ['genre'],
+        limit: 0,
+      }).then(() => {
+        const genreDistribution = result.value?.facetDistribution?.genre;
+        if (genreDistribution) {
+          genres.value = Object.keys(genreDistribution);
+        }
+      });
+    }
 
     return {
       use_queue,
