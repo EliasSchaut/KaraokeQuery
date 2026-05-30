@@ -1,5 +1,4 @@
 import 'dotenv';
-import { deriveMeiliSearchApiKey } from './server/utils/meiliSearchKey';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -13,7 +12,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
-    'nuxt-meilisearch',
   ],
 
   runtimeConfig: {
@@ -32,17 +30,6 @@ export default defineNuxtConfig({
     MEILI_HOST: process.env.MEILI_HOST,
     MEILI_MASTER_KEY: process.env.MEILI_MASTER_KEY,
     SING_SCENE_PLAYER_DATA_DTO: process.env.SING_SCENE_PLAYER_DATA_DTO,
-  },
-
-  meilisearch: {
-    hostUrl: process.env.MEILI_HOST,
-    adminApiKey: process.env.MEILI_MASTER_KEY,
-    // Kein Master-Key im Browser! Der reine Such-Key wird deterministisch aus
-    // dem Master-Key abgeleitet. Im Dev greift dies direkt (hier ist .env
-    // geladen); im gebauten Image ist es zur Build-Zeit leer und wird vom
-    // Entrypoint zur Laufzeit per NUXT_PUBLIC_..._SEARCH_API_KEY gesetzt.
-    searchApiKey: deriveMeiliSearchApiKey(process.env.MEILI_MASTER_KEY),
-    serverSideUsage: true,
   },
 
   fonts: {

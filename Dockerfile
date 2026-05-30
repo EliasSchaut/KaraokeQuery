@@ -20,11 +20,9 @@ ENV PORT=3000
 
 WORKDIR /app
 COPY --from=build /app/.output ./.output
-# Entrypoint leitet den read-only Meilisearch-Such-Key fuer den Browser ab.
-COPY --from=build /app/entrypoint.mjs ./entrypoint.mjs
 
 # Als non-root laufen (der node-User existiert im Base-Image).
 USER node
 
 EXPOSE 3000
-CMD [ "node", "entrypoint.mjs" ]
+CMD [ "node", ".output/server/index.mjs" ]

@@ -61,12 +61,7 @@ export default defineNitroPlugin(async () => {
       `[UltraStar Startup] Received ${songs.length} songs from UltraStar. Loading into Meilisearch 'ultrastar' index...`,
     );
 
-    const { MeiliSearch } = await import('meilisearch');
-    const client = new MeiliSearch({
-      host: MEILI_HOST,
-      apiKey: MEILI_MASTER_KEY,
-    });
-
+    const client = meiliClient();
     const index = client.index('ultrastar');
     const importResponse = index.addDocuments(songs, {
       primaryKey: 'id',

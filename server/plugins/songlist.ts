@@ -35,13 +35,7 @@ export default defineNitroPlugin(async () => {
       `[Meilisearch Startup] Found ${songs.length} songs. Starting import...`,
     );
 
-    const { MeiliSearch } = await import('meilisearch');
-    const client = new MeiliSearch({
-      host: MEILI_HOST,
-      apiKey: MEILI_MASTER_KEY,
-    });
-
-    const index = client.index('karaoke');
+    const index = meiliClient().index('karaoke');
     const stats = await index.getStats();
     if (stats.numberOfDocuments > 0) {
       console.log(

@@ -91,7 +91,7 @@ export default defineComponent({
   setup() {
     const user = userStore();
     const { use_queue, default_username } = useRuntimeConfig().public;
-    const { search, result } = useMeiliSearch('karaoke');
+    const { search, result } = useSongSearch();
 
     const genres = ref<string[]>([]);
     // Nur im Browser suchen: Meilisearch wird vom Client direkt angesprochen

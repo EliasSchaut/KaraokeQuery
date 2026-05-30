@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     return new Response('Missing required parameters', { status: 400 });
   }
 
-  const searchResult = await $meilisearch(event)
+  const searchResult = await meiliClient()
     .index('ultrastar')
     .search(`${artist} ${title}`, {
       limit: 1,
