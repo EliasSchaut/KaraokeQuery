@@ -36,10 +36,17 @@ export default defineNitroPlugin(async () => {
     );
 
     const index = meiliClient().index('karaoke');
-    const stats = await index.getStats();
-    if (stats.numberOfDocuments > 0) {
+
+    let numberOfDocuments = 0;
+    try {
+      numberOfDocuments = (await index.getStats()).numberOfDocuments;
+    } catch (error: any) {
+      if ((error?.cause?.code ?? error?.code) !== 'index_not_found')
+        throw error;
+    }
+    if (numberOfDocuments > 0) {
       console.log(
-        `[Meilisearch Startup] Index 'karaoke' already contains ${stats.numberOfDocuments} documents. Skipping initial import.`,
+        `[Meilisearch Startup] Index 'karaoke' already contains ${numberOfDocuments} documents. Skipping initial import.`,
       );
       return;
     }
